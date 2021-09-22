@@ -1,2 +1,2 @@
-# PropAnalyze
-Script to Analyze Proprioceptors
+# Scripts for Analysis of PClamp Data in Matlab
+
