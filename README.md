@@ -1,2 +1,2 @@
-# Scripts for Analysis of PClamp Data in Matlab
+# Scripts for Analysis of PClamp Clampex Data in Matlab
 
