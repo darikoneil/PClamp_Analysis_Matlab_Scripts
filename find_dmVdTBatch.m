@@ -6,9 +6,9 @@ for a = 1:size(eStack.Conditions,2) %for all conditions
     temporaryPhasePor = zeros(size(eStack.Conditions{2,a}.data,1),numSweep); %preallocate
     tempSweepData = eStack.Conditions{2,a}.data(:,1,:); %Select Only Voltage
     for b = 1:numSweep %for all sweeps
-        temporaryPhasePor(:,b)=reshape([0;diff(tempSweepData(:,1,b))],[],1);
+        temporaryPhasePor(:,b)=reshape([0;diff(tempSweepData(:,1,b))],[],1); %reshape and find first derivative
     end
-    eStack.Conditions{2,a}.PhasePor = temporaryPhasePor.*10;
+    eStack.Conditions{2,a}.PhasePor = temporaryPhasePor.*10; %convert to appropriate units
 end
 
 end

@@ -15,17 +15,18 @@ for a=1:numConditions %for all Conditions
     EIndices = [EIndices (EIndices(3)+tempBaselines)]; %Plus Second Baseline
     EIndices = [EIndices (((numFrames-25)-EIndices(end))+EIndices(end))]; %Compile & extract unallocated
     
-    %Prune
-    eStack.Conditions{2,a}.unprunedData = eStack.Conditions{2,a}.data;
+    %Prune ( sort using indices )
+    eStack.Conditions{2,a}.unprunedData = eStack.Conditions{2,a}.data; %store unprunned for safe keeping
+   
     eStack.Conditions{2,a}.FirstHolding = eStack.Conditions{2,a}.data(1:EIndices(1),:,:);
     eStack.Conditions{2,a}.Baseline_1 = eStack.Conditions{2,a}.data((EIndices(1)+1):EIndices(2),:,:);
     eStack.Conditions{2,a}.Baseline_2 = eStack.Conditions{2,a}.data((EIndices(3)+1):EIndices(4),:,:);
     eStack.Conditions{2,a}.UnAllocated = eStack.Conditions{2,a}.data((EIndices(4)+1):EIndices(5),:,:);
     eStack.Conditions{2,a}.LastHolding = eStack.Conditions{2,a}.data((EIndices(5)+1):end,:,:);
-    eStack.Conditions{2,a}.data = eStack.Conditions{2,a}.data((EIndices(2)+1):EIndices(3),:,:);
+    eStack.Conditions{2,a}.data = eStack.Conditions{2,a}.data((EIndices(2)+1):EIndices(3),:,:); %note that data is redefined as prunned data!!!
    
     %Fix Frames
-    eStack.Conditions{2,a}.unprunedFrames=eStack.Conditions{2,a}.numFrames;
-    eStack.Conditions{2,a}.numFrames=size(eStack.Conditions{2,a}.data,1);
-    eStack.Conditions{2,a}.EIndices=EIndices;
+    eStack.Conditions{2,a}.unprunedFrames=eStack.Conditions{2,a}.numFrames; %store number of unprunned frames
+    eStack.Conditions{2,a}.numFrames=size(eStack.Conditions{2,a}.data,1); %store number of prunned frames
+    eStack.Conditions{2,a}.EIndices=EIndices; %store indicesz
 end
