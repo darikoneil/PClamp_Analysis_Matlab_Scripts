@@ -8,7 +8,7 @@ numConditions = size(eStack.Conditions,2); %Determine # of Plots Condition
 
 
 for a = 1:numConditions %for all conditions
-    unprunnedFrames = eStack.Conditions{2,a}.unprunnedFrames;
+    unprunnedFrames = eStack.Conditions{2,a}.unprunedFrames;
     firstDataFrame = (eStack.Conditions{2,a}.EIndices(2))+1;
     lastDataFrame = eStack.Conditions{2,a}.EIndices(3);
     tempBuffer_V=eStack.Conditions{2,a}.unprunedData(:,1,:);
