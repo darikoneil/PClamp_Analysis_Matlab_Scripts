@@ -8,11 +8,14 @@ numConditions = size(eStack.Conditions,2); %Determine # of Plots Condition
 
 
 for a = 1:numConditions %for all conditions
+    unprunnedFrames = eStack.Conditions{2,a}.unprunnedFrames;
+    firstDataFrame = (eStack.Conditions{2,a}.EIndices(2))+1;
+    lastDataFrame = eStack.Conditions{2,a}.EIndices(3);
     tempBuffer_V=eStack.Conditions{2,a}.unprunedData(:,1,:);
     tempNumSweeps = eStack.Conditions{2,a}.numSweep; %Sweeps\
-    tempBuffer_V=reshape(tempBuffer_V,1600,tempNumSweeps);
-    fitValues = [1:1600];
-    splineValues = [1:0.01:1600]; %num frame
+    tempBuffer_V=reshape(tempBuffer_V,unprunnedFrames,tempNumSweeps);
+    fitValues = [1:unprunnedFrames];
+    splineValues = [1:0.01:unprunnedFrames]; %num frame
 
     
     threshBySweep = nan(1,tempNumSweeps); %Preallocate Thresholds
@@ -21,13 +24,13 @@ for a = 1:numConditions %for all conditions
     rheoAmps = nan(1,tempNumSweeps);
     storedFits = cell(2,tempNumSweeps);
     for b = 1:tempNumSweeps
-        tempBuffer_dVdT = [0;diff(reshape(eStack.Conditions{2,a}.unprunedData(:,1,b),1600,1))]; %1600 = num frames
+        tempBuffer_dVdT = [0;diff(reshape(eStack.Conditions{2,a}.unprunedData(:,1,b),unprunnedFrames,1))]; %1600 = num frames
         splinesX = pchip(fitValues,tempBuffer_V(:,b),splineValues);
         splinesY = pchip(fitValues,tempBuffer_dVdT,splineValues).*10;
         storedFits{1,b}=splinesX;
         storedFits{2,b}=splinesY;
-        idx1=find(splineValues==276); %this needs to be d
-        idx2=find(splineValues==1275);%this needs to be d
+        idx1=find(splineValues==firstDataFrame); %this needs to be d
+        idx2=find(splineValues==lastDataFrame);%this needs to be d
         splinesX=splinesX(idx1:idx2);
         splinesY=splinesY(idx1:idx2);
      
