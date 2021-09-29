@@ -1,7 +1,9 @@
 function [eStack] = prune2Sweep(eStack)
 
+%import
 numConditions = size(eStack.Conditions,2); %number of conditions
 
+%%%%%%%%%%%%%%%%%%%
 for a=1:numConditions %for all Conditions
     
     %Index
@@ -24,6 +26,7 @@ for a=1:numConditions %for all Conditions
     eStack.Conditions{2,a}.UnAllocated = eStack.Conditions{2,a}.data((EIndices(4)+1):EIndices(5),:,:);
     eStack.Conditions{2,a}.LastHolding = eStack.Conditions{2,a}.data((EIndices(5)+1):end,:,:);
     eStack.Conditions{2,a}.data = eStack.Conditions{2,a}.data((EIndices(2)+1):EIndices(3),:,:); %note that data is redefined as prunned data!!!
+   
    
     %Fix Frames
     eStack.Conditions{2,a}.unprunedFrames=eStack.Conditions{2,a}.numFrames; %store number of unprunned frames

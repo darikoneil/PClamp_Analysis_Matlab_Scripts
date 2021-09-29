@@ -26,6 +26,8 @@ for a = 1:numConditions
         eStack.Conditions{2,a}.rheoLocs = NaN;
     end
     
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% now for non-rheo sweep
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     data = eStack.Conditions{2,a}.data;
     numSweeps = eStack.Conditions{2,a}.numSweep;
     eStack.Conditions{2,a}.numAPs = cell(1,numSweeps);

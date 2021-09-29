@@ -6,7 +6,7 @@ eStack  = struct();
 %Segregrate Conditions
 eStack.Conditions = cell(2,size(Conditions,2)); %1st row Conditions second row is sub-structures
 eStack.Animal = Animal;
-eStack.cellStats = cellStats;
+eStack.cellStats = cellStats; %resistance etc
 
 %Now We Import the Data
 

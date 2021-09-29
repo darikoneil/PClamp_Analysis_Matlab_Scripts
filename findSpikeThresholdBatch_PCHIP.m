@@ -12,7 +12,7 @@ for a = 1:numConditions %for all conditions
     tempNumSweeps = eStack.Conditions{2,a}.numSweep; %Sweeps\
     tempBuffer_V=reshape(tempBuffer_V,1600,tempNumSweeps);
     fitValues = [1:1600];
-    splineValues = [1:0.01:1600];
+    splineValues = [1:0.01:1600]; %num frame
 
     
     threshBySweep = nan(1,tempNumSweeps); %Preallocate Thresholds
@@ -21,26 +21,26 @@ for a = 1:numConditions %for all conditions
     rheoAmps = nan(1,tempNumSweeps);
     storedFits = cell(2,tempNumSweeps);
     for b = 1:tempNumSweeps
-        tempBuffer_dVdT = [0;diff(reshape(eStack.Conditions{2,a}.unprunedData(:,1,b),1600,1))];
+        tempBuffer_dVdT = [0;diff(reshape(eStack.Conditions{2,a}.unprunedData(:,1,b),1600,1))]; %1600 = num frames
         splinesX = pchip(fitValues,tempBuffer_V(:,b),splineValues);
         splinesY = pchip(fitValues,tempBuffer_dVdT,splineValues).*10;
         storedFits{1,b}=splinesX;
         storedFits{2,b}=splinesY;
-        idx1=find(splineValues==276);
-        idx2=find(splineValues==1275);
+        idx1=find(splineValues==276); %this needs to be d
+        idx2=find(splineValues==1275);%this needs to be d
         splinesX=splinesX(idx1:idx2);
         splinesY=splinesY(idx1:idx2);
      
         sLoc = find(splinesY>=sThresh,1);
-        if numel(sLoc)>0 & max(tempBuffer_V(:,b))>=0
-            sVal = splinesX(sLoc);
-            rheoAmps(b)= max(splinesX);
-            threshLoc(b)=round(splineValues(sLoc),0);
-            threshBySweep(b)=sVal;
-            noSpikesIdx(b)=0;
+        if numel(sLoc)>0 & max(tempBuffer_V(:,b))>=0 %make sure above zero mV
+            sVal = splinesX(sLoc); %voltage at spike (spike threshold)
+            rheoAmps(b)= max(splinesX); %spike amplitude
+            threshLoc(b)=round(splineValues(sLoc),0); %location on the original, non-upscaled frames
+            threshBySweep(b)=sVal; %store it
+            noSpikesIdx(b)=0; %did spike
             %rheoAmps(b) = max(tempBuffer_V(:,b));
         else
-            noSpikesIdx(b)=1;
+            noSpikesIdx(b)=1; %didn't spike  
         end
         
         
