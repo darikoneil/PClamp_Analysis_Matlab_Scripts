@@ -11,6 +11,7 @@ eStack.cellStats = cellStats; %resistance etc
 %Now We Import the Data
 
 filePath = uigetdir(matlabroot,'Select Folder Containing Patching Files for Cell'); %Grab path
+addpath(filePath);
 idxFiles = dir(fullfile(filePath,'*.abf')); %grabs all axon binary format files in folder
 
 for a = 1:length(idxFiles)
